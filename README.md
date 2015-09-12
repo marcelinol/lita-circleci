@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/marcelinol/lita-circleci.png?branch=master)](https://travis-ci.org/marcelinol/lita-circleci)
 [![Coverage Status](https://coveralls.io/repos/marcelinol/lita-circleci/badge.png)](https://coveralls.io/r/marcelinol/lita-circleci)
+[![Code Climate](https://codeclimate.com/github/marcelinol/lita-circleci/badges/gpa.svg)](https://codeclimate.com/github/marcelinol/lita-circleci)
 
 TODO: Add a description of the plugin.
 
