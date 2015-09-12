@@ -3,7 +3,6 @@ require 'circleci'
 module Lita
   module Handlers
     class Circleci < Handler
-
       #TODO: puts config on config file
       CircleCi.configure do |config|
         config.token = ENV["CIRCLECI_TOKEN"] || ""
