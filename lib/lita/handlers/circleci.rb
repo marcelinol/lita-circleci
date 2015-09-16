@@ -18,7 +18,7 @@ module Lita
 
       private
       def handle_response(response)
-        if response.errors.present?
+        if response.errors.any?
           error_message = JSON.parse(response.errors[0].message)['message']
           error_message
         elsif response.body.empty?
