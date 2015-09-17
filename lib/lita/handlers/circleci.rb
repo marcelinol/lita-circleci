@@ -31,6 +31,15 @@ module Lita
         end
       end
 
+      def active_builds(project, branch)
+        # response = CircleCi::Project.recent_builds_branch(ORG, project, branch)
+        # response.each do
+        #
+        # end
+        # response.body['status']
+        # response.body['build_num']
+      end
+
       Lita.register_handler(self)
     end
   end
