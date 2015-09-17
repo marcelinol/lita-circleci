@@ -14,7 +14,7 @@ module Lita
         'build status' => 'Get the status of the last build of the branch you asked'
       })
 
-      route(/^boost build (.+)\/(\S+)$/, :build_up, command: true, help: {
+      route(/^boost build (.+)\/(\S+)$/, :boost_build, command: true, help: {
         'build status' => 'Get the status of the last build of the branch you asked'
       })
 
@@ -23,8 +23,8 @@ module Lita
         message.reply(handle_response(response))
       end
 
-      def build_up(message)
-        boost_build(message.match_data[1], message.match_data[2])
+      def boost_build(message)
+        handle_boost(message.match_data[1], message.match_data[2])
         message.reply("thats all right")
       end
 
@@ -41,7 +41,7 @@ module Lita
         end
       end
 
-      def boost_build(project, branch)
+      def handle_boost(project, branch)
         #VERIFICAR SE A BRANCH EXISTE!
         builds = active_builds(project, branch)
 
