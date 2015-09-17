@@ -18,7 +18,10 @@ describe Lita::Handlers::Circleci, lita_handler: true, vcr: true do
     end
 
     context do
-      before { send_command(message) }
+      before do
+        send_command(message)
+        sleep(240)
+      end
 
       context 'when there is no connection with circle' do
         xit do
