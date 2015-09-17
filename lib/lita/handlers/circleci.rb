@@ -14,7 +14,7 @@ module Lita
         'build status' => 'Get the status of the last build of the branch you asked'
       })
 
-      route(/^boost build (.+)\/(\S+)$/, :get_status, command: true, help: {
+      route(/^boost build (.+)\/(\S+)$/, :build_up, command: true, help: {
         'build status' => 'Get the status of the last build of the branch you asked'
       })
 
@@ -43,7 +43,9 @@ module Lita
 
       def boost_build(project, branch)
         #VERIFICAR SE A BRANCH EXISTE!
-        active_builds.each do |build_num|
+        builds = active_builds(project, branch)
+
+        builds.each do |build_num|
           retry_build(project, build_num)
           cancel_build(project, build_num)
         end
@@ -51,7 +53,7 @@ module Lita
 
       def active_builds(project, branch)
         recent_builds = CircleCi::Project.recent_builds(ORG, project)
-        recent_builds.reverse
+        recent_builds.body.reverse
         active_builds = []
         recent_builds.body.each do |build|
           return active_builds if build['branch'] == branch
@@ -64,11 +66,11 @@ module Lita
         CIRCLE_STATUSES.include?(build['status'])
       end
 
-      def retry_build(project, build_num)
+      def cancel_build(project, build_num)
         CircleCi::Build.cancel(ORG, project, build_num)
       end
 
-      def cancel_build(project, build_num)
+      def retry_build(project, build_num)
         CircleCi::Build.retry(ORG, project, build_num)
       end
 
