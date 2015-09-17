@@ -24,7 +24,9 @@ describe Lita::Handlers::Circleci, lita_handler: true, vcr: true do
       end
 
       context 'when there is no connection with circle' do
-        xit do
+        before { allow(CircleCi::Project).to receive(:recent_builds_branch).and_return(nil) }
+
+        it do
           send_command(message)
           expect(replies.last).to match(/Sorry, I got no response from CircleCI/)
         end
