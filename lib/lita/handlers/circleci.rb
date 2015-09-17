@@ -9,7 +9,9 @@ module Lita
       end
       ORG = ENV['ORGANIZATION'] || 'marcelinol'
 
-      route(/^circle status (.+)\/(\S+)$/, :get_status, command: true)
+      route(/^build status (.+)\/(\S+)$/, :get_status, command: true, help: {
+        'build status' => 'Get the status of the last build of the branch you asked'
+      })
 
       def get_status(message)
         response = CircleCi::Project.recent_builds_branch(ORG, message.match_data[1], message.match_data[2])
