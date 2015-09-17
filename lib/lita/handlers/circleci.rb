@@ -10,7 +10,7 @@ module Lita
       ORG = ENV['ORGANIZATION'] || 'marcelinol'
 
       route(/^build status (.+)\/(\S+)$/, :get_status, command: true, help: {
-        'build status' => 'Get the status of the last build of the branch you asked'
+        'build status' => 'Get th status of the last build of the branch you asked'
       })
 
       def get_status(message)
