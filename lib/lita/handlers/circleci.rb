@@ -8,14 +8,24 @@ module Lita
         config.token = ENV["CIRCLECI_TOKEN"] || "8ef23f9b25252ac6f044328a15ed9a92d7e90727"
       end
       ORG = ENV['ORGANIZATION'] || 'marcelinol'
+      CIRCLE_STATUSES = %w(queued scheduled not_running)
 
       route(/^build status (.+)\/(\S+)$/, :get_status, command: true, help: {
+        'build status' => 'Get the status of the last build of the branch you asked'
+      })
+
+      route(/^boost build (.+)\/(\S+)$/, :get_status, command: true, help: {
         'build status' => 'Get the status of the last build of the branch you asked'
       })
 
       def get_status(message)
         response = CircleCi::Project.recent_builds_branch(ORG, message.match_data[1], message.match_data[2])
         message.reply(handle_response(response))
+      end
+
+      def build_up(message)
+        boost_build(message.match_data[1], message.match_data[2])
+        message.reply("thats all right")
       end
 
       private
@@ -31,13 +41,35 @@ module Lita
         end
       end
 
+      def boost_build(project, branch)
+        #VERIFICAR SE A BRANCH EXISTE!
+        active_builds.each do |build_num|
+          retry_build(project, build_num)
+          cancel_build(project, build_num)
+        end
+      end
+
       def active_builds(project, branch)
-        # response = CircleCi::Project.recent_builds_branch(ORG, project, branch)
-        # response.each do
-        #
-        # end
-        # response.body['status']
-        # response.body['build_num']
+        recent_builds = CircleCi::Project.recent_builds(ORG, project)
+        recent_builds.reverse
+        active_builds = []
+        recent_builds.body.each do |build|
+          return active_builds if build['branch'] == branch
+          active_builds << build['build_num'] if must_retry(build)
+        end
+        active_builds
+      end
+
+      def must_retry(build)
+        CIRCLE_STATUSES.include?(build['status'])
+      end
+
+      def retry_build(project, build_num)
+        CircleCi::Build.cancel(ORG, project, build_num)
+      end
+
+      def cancel_build(project, build_num)
+        CircleCi::Build.retry(ORG, project, build_num)
       end
 
       Lita.register_handler(self)
