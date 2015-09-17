@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://circleci.com/api/v1/project/marcelinol/lita-circleci/tree/inexistent-branch?circle-token=8ef23f9b25252ac6f044328a15ed9a92d7e90727
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 17 Sep 2015 01:35:39 GMT
+      Server:
+      - nginx
+      Set-Cookie:
+      - ab_test_user_seed=0.1041978310937659;Expires=Sat, 17 Sep 2016 01:35:39 +0000;Path=/;Secure
+      - ring-session=PyiGqq%2FZ4mO7VyIPUHIxL2tJYB3wzT1dmKvJaBJBrTXwIgfD7kDqMj3aFjH7ly1H1W5hOhtPxoV4TWTTfEPyUKplcqOQ%2FD23XzK%2F8%2BoMtO5jctv79wwQwDKNO60YTUNR%2BXrCnBVp3eUer1PhUVxtEc06Uk479INWSwwAQvaBU2%2FYexs5gAyKkos5p4ZEmkGP5CMNmfN3DeW8MDlMuMBqZIH7yOBiaEUwqiST3K1vCLI%3D--SW03jzE37S4TOBwz8fwUuGbdWpp1hO5LPNXB4t6%2B7Ts%3D;Path=/;HttpOnly;Expires=Thu,
+        15 Sep 2016 16:10:19 +0000;Max-Age=31536000;Secure
+      Strict-Transport-Security:
+      - max-age=15724800
+      X-Circleci-Identity:
+      - i-f2a73c51
+      X-Circleci-Scopes:
+      - ":all"
+      - ":none"
+      - ":read-settings"
+      - ":status"
+      - ":view-builds"
+      - ":write-settings"
+      X-Frame-Options:
+      - DENY
+      X-Route:
+      - "/api/v1/project/:username/:repo/tree/:branch"
+      - ":branch"
+      - "[^,;?]+"
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+  recorded_at: Thu, 17 Sep 2015 01:35:43 GMT
+recorded_with: VCR 2.9.2

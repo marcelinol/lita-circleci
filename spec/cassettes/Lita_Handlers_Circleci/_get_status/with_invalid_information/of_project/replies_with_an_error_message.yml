@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://circleci.com/api/v1/project/marcelinol/wrong_project/tree/feature-branch?circle-token=8ef23f9b25252ac6f044328a15ed9a92d7e90727
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 17 Sep 2015 01:35:38 GMT
+      Server:
+      - nginx
+      Set-Cookie:
+      - ab_test_user_seed=0.8610301052033275;Expires=Sat, 17 Sep 2016 01:35:38 +0000;Path=/;Secure
+      - ring-session=7Unz69C0LeeS7oxON%2BsvyjbfI1n5g28zhIOg1UNy5q8ZAppv0hfGGitsASgXtCe9Lk%2F95OkaJx8dIn%2FEKrBjRWCePkZ6cf2z7mrFXgZU9hmfcIisdTIzohnGAAXPPZAJV%2BBBlPZeJmKqMYt%2FaZRAMtLyNjMXGS6VS5VV4T%2FPM8cM9KPdRAmgotheVDKWHIKIPhgUS6HPdAhcUr9x25cIXSUBVMMNHSiXCcRyKtTDpIY%3D--mBfElplMHcjz5rsupVesJjcEpQFxDh%2FV8SlEWm3OX3c%3D;Path=/;HttpOnly;Expires=Thu,
+        15 Sep 2016 16:32:46 +0000;Max-Age=31536000;Secure
+      X-Circleci-Identity:
+      - i-99501470
+      X-Frame-Options:
+      - DENY
+      X-Route:
+      - "/api/v1/project/:username/:repo/tree/:branch"
+      - ":branch"
+      - "[^,;?]+"
+      Content-Length:
+      - '31'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"message":"Project not found"}'
+    http_version: 
+  recorded_at: Thu, 17 Sep 2015 01:35:42 GMT
+recorded_with: VCR 2.9.2
