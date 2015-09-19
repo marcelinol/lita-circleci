@@ -28,7 +28,7 @@ module Lita
         message.reply("thats all right")
       end
 
-      private
+      # private
       def handle_response(response)
         return "Sorry, I got no response from CircleCI :disappointed:" unless response
         if response.errors.any?
