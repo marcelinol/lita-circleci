@@ -14,7 +14,7 @@ module Lita
         'build status' => 'Get the status of the last build of the branch you asked'
       })
 
-      route(/^builds before (.+)\/(\S+)$/, :builds_before, command: true, help: {
+      route(/^builds before (.+)\/(\S+)$/, :answer_builds_before, command: true, help: {
         'builds before' => 'Get the amount of builds that will run before the informed one'
       })
 
@@ -31,26 +31,29 @@ module Lita
         message.reply(handle_response(response))
       end
 
-      def builds_before(message)
+      def answer_builds_before(message)
         project = message.match_data[1]
         branch = message.match_data[2]
 
+        waiting_builds_before = builds_before(project, branch)
+        answer = waiting_builds_before.map do |build|
+          "#{build['branch']}(#{build['build_num']})"
+        end
+
+        message.reply "Those builds will run before yours: #{answer.join(', ')}"
+      end
+
+      def builds_before(project, branch)
         waiting_builds = waiting_builds(project)
 
         branch_build = branch_last_build(project, branch)
-        message.reply branch_build['build_num'].to_s
 
         waiting_builds_before = []
         waiting_builds.reverse.each do |build|
           break if build['build_num'] == branch_build['build_num']
           waiting_builds_before << build
         end
-
-        answer = waiting_builds_before.map do |build|
-          "#{build['branch']}(#{build['build_num']})"
-        end
-
-        message.reply "Those builds will run before yours: #{answer.join(', ')}"
+        waiting_builds_before
       end
 
       def how_many_builds_before(message)
