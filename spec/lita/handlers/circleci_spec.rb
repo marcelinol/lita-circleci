@@ -4,6 +4,8 @@ describe Lita::Handlers::Circleci, lita_handler: true, vcr: true do
 
   ## Routes
   it { is_expected.to route_command('build status project_name/some-branch').to(:get_status) }
+  it { is_expected.to route_command('builds before project_name/some-branch').to(:builds_before) }
+  it { is_expected.to route_command('how many builds before project_name/some-branch').to(:how_many_builds_before) }
 
   ## Commands
   describe '#get_status' do
