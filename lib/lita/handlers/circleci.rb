@@ -76,7 +76,7 @@ module Lita
         recent_builds = CircleCi::Project.recent_builds(ORG, project).body
 
         recent_builds.map do |build|
-          build if CIRCLE_WAITING_STATUSES.include?(build['status'])
+          build if must_retry?(build)
         end.compact!
       end
 
@@ -98,28 +98,7 @@ module Lita
         end
       end
 
-      def handle_boost(project, branch)
-        #VERIFICAR SE A BRANCH EXISTE!
-        builds = active_builds(project, branch)
-
-        builds.each do |build_num|
-          retry_build(project, build_num)
-          cancel_build(project, build_num)
-        end
-      end
-
-      def active_builds(project, branch)
-        recent_builds = CircleCi::Project.recent_builds(ORG, project)
-        recent_builds.body.reverse
-        active_builds = []
-        recent_builds.body.each do |build|
-          return active_builds if build['branch'] == branch
-          active_builds << build['build_num'] if must_retry(build)
-        end
-        active_builds
-      end
-
-      def must_retry(build)
+      def must_retry?(build)
         CIRCLE_WAITING_STATUSES.include?(build['status'])
       end
 

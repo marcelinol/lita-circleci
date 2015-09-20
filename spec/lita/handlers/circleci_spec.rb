@@ -58,26 +58,5 @@ describe Lita::Handlers::Circleci, lita_handler: true, vcr: true do
     end
   end
 
-  describe '#boost_build' do
-  end
 
-  describe '#active_builds' do
-    let(:organization_name) { 'marcelinol' }
-    let(:project_name) { 'lita-circleci' }
-    let(:branch) { 'buildup' }
-
-    it 'returns an array' do
-      expect(subject.active_builds(project_name, branch)).to be_a(Array)
-    end
-
-    context 'with active builds' do
-    end
-
-    context 'with no active builds' do
-
-      it 'returns an empty array' do
-        expect(subject.active_builds(project_name, branch)).to match_array([])
-      end
-    end
-  end
 end
