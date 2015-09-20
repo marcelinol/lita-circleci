@@ -58,5 +58,49 @@ describe Lita::Handlers::Circleci, lita_handler: true, vcr: true do
     end
   end
 
+  describe '#answer_builds_before' do
+    let(:organization_name) { 'marcelinol' }
+    let(:project_name) { 'lita-circleci' }
+    let(:branch) { 'buildup' }
 
+    before do
+      send_command(message)
+    end
+
+    context 'with invalid parameters' do
+      let(:message) { "builds before pipopo/papeira" }
+
+      it 'does not answer the default answer to that command' do
+        expect(replies.last).not_to match(/Those builds will run before yours/)
+      end
+    end
+
+    context 'with valid parameters' do
+      let(:message) { "builds before #{project_name}/#{branch}" }
+
+      context "with other branch's build to run before the one asked" do
+        let(:right_answer) { 'Those builds will run before yours: master(150), master(151)' }
+
+        it { expect(replies.last).to eq(right_answer) }
+      end
+
+      context "with other build from the same branch to run before" do
+        let(:right_answer) { 'Those builds will run before yours: master(150), master(151)' }
+
+        it { expect(replies.last).to eq(right_answer) }
+      end
+
+      context "with no builds before the one asked" do
+        let(:right_answer) { 'Those builds will run before yours: master(150), master(151)' }
+
+        it { expect(replies.last).to eq(right_answer) }
+      end
+
+      context "when the build asked is already running" do
+        let(:right_answer) { 'Those builds will run before yours: master(150), master(151)' }
+
+        it { expect(replies.last).to eq(right_answer) }
+      end
+    end
+  end
 end
