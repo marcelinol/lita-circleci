@@ -18,7 +18,7 @@ module Lita
         'builds before' => 'Get the amount of builds that will run before the informed one'
       })
 
-      route(/^how many builds before (.+)\/(\S+)$/, :how_many_builds_before, command: true, help: {
+      route(/^how many builds before (.+)\/(\S+)$/, :answer_how_many_builds_before, command: true, help: {
         'builds before' => 'Get the amount of builds that will run before the informed one'
       })
 
@@ -43,6 +43,17 @@ module Lita
         message.reply "Those builds will run before yours: #{answer.join(', ')}"
       end
 
+      def answer_how_many_builds_before(message)
+        project = message.match_data[1]
+        branch = message.match_data[2]
+
+        quantity = builds_before(project, branch).count
+        message.reply "There are #{quantity} builds to run before yours"
+      end
+
+################################################################################
+
+      private
       def builds_before(project, branch)
         waiting_builds = waiting_builds(project)
 
@@ -54,9 +65,6 @@ module Lita
           waiting_builds_before << build
         end
         waiting_builds_before
-      end
-
-      def how_many_builds_before(message)
       end
 
       def branch_last_build(project, branch)
